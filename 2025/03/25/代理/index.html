@@ -21,24 +21,31 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"hxblog.fun","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.23.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"always","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-light"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="落花人独立，微雨燕双飞">
-<meta property="og:type" content="website">
-<meta property="og:title" content="hx294">
-<meta property="og:url" content="https://hxblog.fun/archives/page/2/index.html">
+    <meta name="description" content="前段时间一直在写CS144，故来学习下代理的过程 代理原理的初步认识">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络代理">
+<meta property="og:url" content="https://hxblog.fun/2025/03/25/%E4%BB%A3%E7%90%86/index.html">
 <meta property="og:site_name" content="hx294">
-<meta property="og:description" content="落花人独立，微雨燕双飞">
+<meta property="og:description" content="前段时间一直在写CS144，故来学习下代理的过程 代理原理的初步认识">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://hxblog.fun/2025/03/25/%E4%BB%A3%E7%90%86/image-20250328211531349-17431677325541.png">
+<meta property="og:image" content="https://hxblog.fun/2025/03/25/%E4%BB%A3%E7%90%86/image-20250328211552315.png">
+<meta property="og:image" content="https://hxblog.fun/2025/03/25/%E4%BB%A3%E7%90%86/image-20250328210830912.png">
+<meta property="article:published_time" content="2025-03-24T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-04-10T08:07:30.732Z">
 <meta property="article:author" content="hx294">
+<meta property="article:tag" content="网络">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hxblog.fun/2025/03/25/%E4%BB%A3%E7%90%86/image-20250328211531349-17431677325541.png">
 
 
-<link rel="canonical" href="https://hxblog.fun/archives/page/2/">
+<link rel="canonical" href="https://hxblog.fun/2025/03/25/%E4%BB%A3%E7%90%86/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"archives/page/2/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://hxblog.fun/2025/03/25/%E4%BB%A3%E7%90%86/","path":"2025/03/25/代理/","title":"网络代理"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>hx294</title>
+<title>网络代理 | hx294</title>
   
 
 
@@ -94,7 +101,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">hx294</h1>
+      <p class="site-title">hx294</p>
       <i class="logo-line"></i>
     </a>
   </div>
@@ -120,7 +127,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -133,6 +140,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%90%86%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">代理原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tinyproxy%E6%90%AD%E5%BB%BA"><span class="nav-number">2.</span> <span class="nav-text">tinyproxy搭建</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -175,22 +183,54 @@
     </div>
 
     
+        <div class="sidebar-inner sidebar-post-related">
+          <div class="animated">
+              <div class="links-of-blogroll-title"><i class="fa fa-signs-post fa-fw"></i>
+    相关文章
+  </div>
+  <ul class="popular-posts">
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2025/03/19/Linux%E4%B8%AD%E7%9A%84%E8%AE%BE%E5%A4%87/" rel="bookmark">
+        <time class="popular-posts-time">2025-03-19</time>
+        <br>
+      Linux中的设备
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2025/03/18/CS144%E7%95%AA%E5%A4%96/" rel="bookmark">
+        <time class="popular-posts-time">2025-03-18</time>
+        <br>
+      CS144番外
+      </a>
+    </li>
+    <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2025/04/09/wsl2%E5%92%8Cwin%E7%9A%84%E7%BD%91%E7%BB%9C%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB/" rel="bookmark">
+        <time class="popular-posts-time">2025-04-09</time>
+        <br>
+      wsl2 和 win主机的网络映射关系
+      </a>
+    </li>
+  </ul>
+
+          </div>
+        </div>
   </aside>
 
 
     </div>
 
-    <div class="main-inner index posts-expand">
+    <div class="main-inner post posts-expand">
 
-    
+
+  
 
 
 <div class="post-block">
   
   
 
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://hxblog.fun/2025/03/18/CS144%E7%95%AA%E5%A4%96/">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://hxblog.fun/2025/03/25/%E4%BB%A3%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/huiye.jpg">
@@ -203,13 +243,13 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | hx294">
+      <meta itemprop="name" content="网络代理 | hx294">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/03/18/CS144%E7%95%AA%E5%A4%96/" class="post-title-link" itemprop="url">CS144番外</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          网络代理
+        </h1>
 
         <div class="post-meta-container">
           <div class="post-meta">
@@ -219,16 +259,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2025-03-18 21:41:00" itemprop="dateCreated datePublished" datetime="2025-03-18T21:41:00+08:00">2025-03-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/CS144/" itemprop="url" rel="index"><span itemprop="name">CS144</span></a>
-        </span>
+      <time title="创建时间：2025-03-25 00:00:00" itemprop="dateCreated datePublished" datetime="2025-03-25T00:00:00+08:00">2025-03-25</time>
     </span>
 
   
@@ -238,14 +269,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.1k</span>
+      <span>303</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>8 分钟</span>
+      <span>1 分钟</span>
     </span>
 </div>
 
@@ -255,18 +286,42 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
-          <p>由于之前赶着做CS144，一直没有把Minnow的源代码好好看看，现在有时间了，准备将代码逻辑缕缕，看看是如何将包从发送方发出，并一步步到达接收方。</p>
-<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2h4Mjk0L2NzMTQ0LTIwMjR3aW50ZXI=">本人仓库代码<i class="fa fa-external-link-alt"></i></span></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2025/03/18/CS144%E7%95%AA%E5%A4%96/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
+    <div class="post-body" itemprop="articleBody"><p>前段时间一直在写CS144，故来学习下代理的过程 代理原理的初步认识
+<span id="more"></span></p>
+<h3 id="代理原理">代理原理</h3>
+<p>看这篇博客：<span class="exturl" data-url="aHR0cHM6Ly9rZWVuamluLmdpdGh1Yi5pby8yMDIwLzAzL3Byb3h5Lw==">【网络技术】代理服务器原理<i class="fa fa-external-link-alt"></i></span></p>
+<p>将原本需要直接访问的HTTP包，通过TCP封装直接（不用DNS，因为目标IP不是域名对应的IP，而是代理服务器的IP）发给代理服务器，代理服务器再将请求发送给WEB服务器。</p>
+<h3 id="tinyproxy搭建">tinyproxy搭建</h3>
+<p>使用远程服务器作为代理，来访问域名。</p>
+<ul>
+<li>在 <code>/etc/tinyproxy/tinyproxy.conf</code>
+中设置接入的端口，以及允许访问的IP。</li>
+</ul>
+<p>端口</p>
+<figure>
+<img src="image-20250328211531349-17431677325541.png"
+alt="image-20250328211531349" />
+<figcaption aria-hidden="true">image-20250328211531349</figcaption>
+</figure>
+<p>注释代表全部IP均可访问，也可以自行设置。</p>
+<figure>
+<img src="image-20250328211552315.png" alt="image-20250328211552315" />
+<figcaption aria-hidden="true">image-20250328211552315</figcaption>
+</figure>
+<ul>
+<li>开放防火墙端口</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> firewall-cmd --permanent --add-port=13197/tcp</span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> firewall-cmd --reload</span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> firewall-cmd --list-ports  <span class="comment"># 检查</span></span><br></pre></td></tr></table></figure>
+<p>在远程服务器部署TinyProxy（上网搜）
+试了很多端口始终无法接通，腾讯云的问题,需要在服务器管理页面设置安全组，相当于是系统防火墙以外的墙。</p>
+<p>遂换了台服务器，在本地使用 下面的命令</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -x http://&lt;ip&gt;:&lt;port&gt; -L https://www.baidu.com</span><br></pre></td></tr></table></figure>
+<p>然后就可以返回网页内容。</p>
+<figure>
+<img src="image-20250328210830912.png" alt="image-20250328210830912" />
+<figcaption aria-hidden="true">image-20250328210830912</figcaption>
+</figure>
+
     </div>
 
     
@@ -274,208 +329,24 @@
     
 
     <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
+          <div class="post-tags">
+              <a href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag"># 网络</a>
+          </div>
 
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://hxblog.fun/2024/03/14/%E8%8C%83%E6%95%B0%E3%80%81%E8%B7%9D%E7%A6%BB%E4%B8%8E%E7%9B%B8%E4%BC%BC%E5%BA%A6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/huiye.jpg">
-      <meta itemprop="name" content="hx294">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hx294">
-      <meta itemprop="description" content="落花人独立，微雨燕双飞">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | hx294">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/03/14/%E8%8C%83%E6%95%B0%E3%80%81%E8%B7%9D%E7%A6%BB%E4%B8%8E%E7%9B%B8%E4%BC%BC%E5%BA%A6/" class="post-title-link" itemprop="url">范数、距离与相似度</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-03-14 15:57:00" itemprop="dateCreated datePublished" datetime="2024-03-14T15:57:00+08:00">2024-03-14</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BD%91%E5%AE%89%E6%95%B0%E5%9F%BA%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">网安数基笔记</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>859</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>课程笔记
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/03/14/%E8%8C%83%E6%95%B0%E3%80%81%E8%B7%9D%E7%A6%BB%E4%B8%8E%E7%9B%B8%E4%BC%BC%E5%BA%A6/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
-    </div>
 
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://hxblog.fun/2024/02/21/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/huiye.jpg">
-      <meta itemprop="name" content="hx294">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="hx294">
-      <meta itemprop="description" content="落花人独立，微雨燕双飞">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | hx294">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2024/02/21/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/" class="post-title-link" itemprop="url">基础算法</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-02-21 00:06:00" itemprop="dateCreated datePublished" datetime="2024-02-21T00:06:00+08:00">2024-02-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>3.1k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>11 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>学习基础算法
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2024/02/21/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/03/19/Linux%E4%B8%AD%E7%9A%84%E8%AE%BE%E5%A4%87/" rel="prev" title="Linux中的设备">
+                  <i class="fa fa-angle-left"></i> Linux中的设备
+                </a>
             </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
+            <div class="post-nav-item">
+                <a href="/2025/04/09/wsl2%E5%92%8Cwin%E7%9A%84%E7%BD%91%E7%BB%9C%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB/" rel="next" title="wsl2 和 win主机的网络映射关系">
+                  wsl2 和 win主机的网络映射关系 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
     </footer>
   </article>
 </div>
@@ -483,9 +354,7 @@
 
 
 
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/archives/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="page-number" href="/archives/page/4/">4</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/archives/page/3/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+
 
 </div>
   </main>
