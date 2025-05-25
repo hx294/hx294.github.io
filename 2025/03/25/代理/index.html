@@ -21,20 +21,19 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"hxblog.fun","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.23.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"always","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-light"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="前段时间一直在写CS144，故来学习下代理的过程 代理原理的初步认识">
+    <meta name="description" content="前段时间一直在写 CS144，故来学习下代理的过程 代理原理的初步认识">
 <meta property="og:type" content="article">
 <meta property="og:title" content="网络代理">
 <meta property="og:url" content="https://hxblog.fun/2025/03/25/%E4%BB%A3%E7%90%86/index.html">
 <meta property="og:site_name" content="hx294">
-<meta property="og:description" content="前段时间一直在写CS144，故来学习下代理的过程 代理原理的初步认识">
+<meta property="og:description" content="前段时间一直在写 CS144，故来学习下代理的过程 代理原理的初步认识">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://hxblog.fun/2025/03/25/%E4%BB%A3%E7%90%86/image-20250328211531349-17431677325541.png">
 <meta property="og:image" content="https://hxblog.fun/2025/03/25/%E4%BB%A3%E7%90%86/image-20250328211552315.png">
 <meta property="og:image" content="https://hxblog.fun/2025/03/25/%E4%BB%A3%E7%90%86/image-20250328210830912.png">
 <meta property="article:published_time" content="2025-03-24T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-04-10T08:07:30.732Z">
+<meta property="article:modified_time" content="2025-05-25T13:00:21.040Z">
 <meta property="article:author" content="hx294">
-<meta property="article:tag" content="网络">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://hxblog.fun/2025/03/25/%E4%BB%A3%E7%90%86/image-20250328211531349-17431677325541.png">
 
@@ -140,7 +139,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%90%86%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">代理原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tinyproxy%E6%90%AD%E5%BB%BA"><span class="nav-number">2.</span> <span class="nav-text">tinyproxy搭建</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%90%86%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">代理原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tinyproxy-%E6%90%AD%E5%BB%BA"><span class="nav-number">2.</span> <span class="nav-text">tinyproxy 搭建</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -155,7 +154,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -190,6 +189,13 @@
   </div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2025/03/18/how2heap/" rel="bookmark">
+        <time class="popular-posts-time">2025-03-18</time>
+        <br>
+      how2heap
+      </a>
+    </li>
+    <li class="popular-posts-item">
       <a class="popular-posts-link" href="/2025/03/19/Linux%E4%B8%AD%E7%9A%84%E8%AE%BE%E5%A4%87/" rel="bookmark">
         <time class="popular-posts-time">2025-03-19</time>
         <br>
@@ -201,13 +207,6 @@
         <time class="popular-posts-time">2025-03-18</time>
         <br>
       CS144番外
-      </a>
-    </li>
-    <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/2025/04/09/wsl2%E5%92%8Cwin%E7%9A%84%E7%BD%91%E7%BB%9C%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB/" rel="bookmark">
-        <time class="popular-posts-time">2025-04-09</time>
-        <br>
-      wsl2 和 win主机的网络映射关系
       </a>
     </li>
   </ul>
@@ -261,6 +260,15 @@
 
       <time title="创建时间：2025-03-25 00:00:00" itemprop="dateCreated datePublished" datetime="2025-03-25T00:00:00+08:00">2025-03-25</time>
     </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
+        </span>
+    </span>
 
   
     <span class="post-meta-break"></span>
@@ -286,16 +294,18 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>前段时间一直在写CS144，故来学习下代理的过程 代理原理的初步认识
-<span id="more"></span></p>
+    <div class="post-body" itemprop="articleBody"><p>前段时间一直在写 CS144，故来学习下代理的过程 代理原理的初步认识</p>
+<span id="more"></span>
 <h3 id="代理原理">代理原理</h3>
 <p>看这篇博客：<span class="exturl" data-url="aHR0cHM6Ly9rZWVuamluLmdpdGh1Yi5pby8yMDIwLzAzL3Byb3h5Lw==">【网络技术】代理服务器原理<i class="fa fa-external-link-alt"></i></span></p>
-<p>将原本需要直接访问的HTTP包，通过TCP封装直接（不用DNS，因为目标IP不是域名对应的IP，而是代理服务器的IP）发给代理服务器，代理服务器再将请求发送给WEB服务器。</p>
-<h3 id="tinyproxy搭建">tinyproxy搭建</h3>
+<p>将原本需要直接访问的 HTTP 包，通过 TCP 封装直接（不用 DNS，因为目标
+IP 不是域名对应的 IP，而是代理服务器的
+IP）发给代理服务器，代理服务器再将请求发送给 WEB 服务器。</p>
+<h3 id="tinyproxy-搭建">tinyproxy 搭建</h3>
 <p>使用远程服务器作为代理，来访问域名。</p>
 <ul>
 <li>在 <code>/etc/tinyproxy/tinyproxy.conf</code>
-中设置接入的端口，以及允许访问的IP。</li>
+中设置接入的端口，以及允许访问的 IP。</li>
 </ul>
 <p>端口</p>
 <figure>
@@ -303,7 +313,7 @@
 alt="image-20250328211531349" />
 <figcaption aria-hidden="true">image-20250328211531349</figcaption>
 </figure>
-<p>注释代表全部IP均可访问，也可以自行设置。</p>
+<p>注释代表全部 IP 均可访问，也可以自行设置。</p>
 <figure>
 <img src="image-20250328211552315.png" alt="image-20250328211552315" />
 <figcaption aria-hidden="true">image-20250328211552315</figcaption>
@@ -312,7 +322,7 @@ alt="image-20250328211531349" />
 <li>开放防火墙端口</li>
 </ul>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> firewall-cmd --permanent --add-port=13197/tcp</span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> firewall-cmd --reload</span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> firewall-cmd --list-ports  <span class="comment"># 检查</span></span><br></pre></td></tr></table></figure>
-<p>在远程服务器部署TinyProxy（上网搜）
+<p>在远程服务器部署 TinyProxy（上网搜）
 试了很多端口始终无法接通，腾讯云的问题,需要在服务器管理页面设置安全组，相当于是系统防火墙以外的墙。</p>
 <p>遂换了台服务器，在本地使用 下面的命令</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -x http://&lt;ip&gt;:&lt;port&gt; -L https://www.baidu.com</span><br></pre></td></tr></table></figure>
@@ -329,9 +339,6 @@ alt="image-20250328211531349" />
     
 
     <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag"># 网络</a>
-          </div>
 
         
 
@@ -342,8 +349,8 @@ alt="image-20250328211531349" />
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2025/04/09/wsl2%E5%92%8Cwin%E7%9A%84%E7%BD%91%E7%BB%9C%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB/" rel="next" title="wsl2 和 win主机的网络映射关系">
-                  wsl2 和 win主机的网络映射关系 <i class="fa fa-angle-right"></i>
+                <a href="/2025/04/09/wsl2%E5%92%8Cwin%E7%9A%84%E7%BD%91%E7%BB%9C%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB/" rel="next" title="wsl2 和 win 主机的网络映射关系">
+                  wsl2 和 win 主机的网络映射关系 <i class="fa fa-angle-right"></i>
                 </a>
             </div>
           </div>
@@ -376,14 +383,14 @@ alt="image-20250328211531349" />
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">8k</span>
+    <span title="站点总字数">11k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">31 分钟</span>
+    <span title="站点阅读时长">38 分钟</span>
   </span>
 </div>
   <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动

@@ -21,17 +21,16 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"hxblog.fun","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.23.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"always","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-light"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="介绍NAT，镜像和桥接三种网络配置。">
+    <meta name="description" content="介绍 NAT，镜像和桥接三种网络配置。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="wsl2 和 win主机的网络映射关系">
+<meta property="og:title" content="wsl2 和 win 主机的网络映射关系">
 <meta property="og:url" content="https://hxblog.fun/2025/04/09/wsl2%E5%92%8Cwin%E7%9A%84%E7%BD%91%E7%BB%9C%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB/index.html">
 <meta property="og:site_name" content="hx294">
-<meta property="og:description" content="介绍NAT，镜像和桥接三种网络配置。">
+<meta property="og:description" content="介绍 NAT，镜像和桥接三种网络配置。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-04-09T06:28:04.793Z">
-<meta property="article:modified_time" content="2025-04-10T04:57:10.794Z">
+<meta property="article:modified_time" content="2025-05-25T12:58:48.646Z">
 <meta property="article:author" content="hx294">
-<meta property="article:tag" content="网络">
 <meta property="article:tag" content="WSL2">
 <meta name="twitter:card" content="summary">
 
@@ -39,10 +38,10 @@
 <link rel="canonical" href="https://hxblog.fun/2025/04/09/wsl2%E5%92%8Cwin%E7%9A%84%E7%BD%91%E7%BB%9C%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://hxblog.fun/2025/04/09/wsl2%E5%92%8Cwin%E7%9A%84%E7%BD%91%E7%BB%9C%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB/","path":"2025/04/09/wsl2和win的网络映射关系/","title":"wsl2 和 win主机的网络映射关系"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://hxblog.fun/2025/04/09/wsl2%E5%92%8Cwin%E7%9A%84%E7%BD%91%E7%BB%9C%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB/","path":"2025/04/09/wsl2和win的网络映射关系/","title":"wsl2 和 win 主机的网络映射关系"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>wsl2 和 win主机的网络映射关系 | hx294</title>
+<title>wsl2 和 win 主机的网络映射关系 | hx294</title>
   
 
 
@@ -137,7 +136,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#nat%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">NAT模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#windows-arrow_right-linux"><span class="nav-number">1.1.</span> <span class="nav-text">Windows :arrow_right: Linux</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#linux-arrow_right-windows"><span class="nav-number">1.2.</span> <span class="nav-text">Linux :arrow_right: Windows</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">镜像模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">桥接模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">配置</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#nat-%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">NAT 模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#windows-arrow_right-linux"><span class="nav-number">1.1.</span> <span class="nav-text">Windows :arrow_right: Linux</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#linux-arrow_right-windows"><span class="nav-number">1.2.</span> <span class="nav-text">Linux :arrow_right: Windows</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">镜像模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.</span> <span class="nav-text">桥接模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">配置</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -152,7 +151,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -194,17 +193,17 @@
       </a>
     </li>
     <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/2024/02/21/%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80/" rel="bookmark">
-        <time class="popular-posts-time">2024-02-21</time>
+      <a class="popular-posts-link" href="/2025/03/18/CS144%E7%95%AA%E5%A4%96/" rel="bookmark">
+        <time class="popular-posts-time">2025-03-18</time>
         <br>
-      基础算法
+      CS144番外
       </a>
     </li>
     <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/2024/03/14/%E8%8C%83%E6%95%B0%E3%80%81%E8%B7%9D%E7%A6%BB%E4%B8%8E%E7%9B%B8%E4%BC%BC%E5%BA%A6/" rel="bookmark">
-        <time class="popular-posts-time">2024-03-14</time>
+      <a class="popular-posts-link" href="/2025/03/25/%E4%BB%A3%E7%90%86/" rel="bookmark">
+        <time class="popular-posts-time">2025-03-25</time>
         <br>
-      范数、距离与相似度
+      网络代理
       </a>
     </li>
   </ul>
@@ -240,12 +239,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="wsl2 和 win主机的网络映射关系 | hx294">
+      <meta itemprop="name" content="wsl2 和 win 主机的网络映射关系 | hx294">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          wsl2 和 win主机的网络映射关系
+          wsl2 和 win 主机的网络映射关系
         </h1>
 
         <div class="post-meta-container">
@@ -264,7 +263,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE/" itemprop="url" rel="index"><span itemprop="name">网络配置</span></a>
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
         </span>
     </span>
 
@@ -292,21 +291,22 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>介绍NAT，镜像和桥接三种网络配置。 <span id="more"></span></p>
+    <div class="post-body" itemprop="articleBody"><p>介绍 NAT，镜像和桥接三种网络配置。</p>
+<span id="more"></span>
 <p><span class="exturl" data-url="aHR0cHM6Ly9sZWFybi5taWNyb3NvZnQuY29tL3poLWNuL3dpbmRvd3Mvd3NsL25ldHdvcmtpbmcjZGVmYXVsdC1uZXR3b3JraW5nLW1vZGUtbmF0">使用
 WSL 访问网络应用程序 | Microsoft Learn<i class="fa fa-external-link-alt"></i></span></p>
 <p>默认网络模式是<strong>NAT</strong>。</p>
-<h3 id="nat模式">NAT模式</h3>
+<h3 id="nat-模式">NAT 模式</h3>
 <h4 id="windows-arrow_right-linux">Windows :arrow_right: Linux</h4>
-<p>使用localhost 从Windows应用直接访问Linux应用。</p>
+<p>使用 localhost 从 Windows 应用直接访问 Linux 应用。</p>
 <h4 id="linux-arrow_right-windows">Linux :arrow_right: Windows</h4>
-<p>使用主机IP从Linux访问Windows网络应用。</p>
+<p>使用主机 IP 从 Linux 访问 Windows 网络应用。</p>
 <h3 id="镜像模式">镜像模式</h3>
 <p>Linux 与 Windows 共享网络堆栈 ，使得 WSL2
 更像物理主机一样出现在网络上。</p>
 <p><code>networkingMode=mirrored</code></p>
 <h3 id="桥接模式">桥接模式</h3>
-<p>桥接到主机的网络接口。拥有独立IP，能够被局域网发现。</p>
+<p>桥接到主机的网络接口。拥有独立 IP，能够被局域网发现。</p>
 <p><code>networkingMode=bridged</code></p>
 <h3 id="配置">配置</h3>
 <p>附上我的镜像配置：</p>
@@ -320,7 +320,6 @@ WSL 访问网络应用程序 | Microsoft Learn<i class="fa fa-external-link-alt"
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag"># 网络</a>
               <a href="/tags/WSL2/" rel="tag"># WSL2</a>
           </div>
 
@@ -364,14 +363,14 @@ WSL 访问网络应用程序 | Microsoft Learn<i class="fa fa-external-link-alt"
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">8k</span>
+    <span title="站点总字数">11k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">31 分钟</span>
+    <span title="站点阅读时长">38 分钟</span>
   </span>
 </div>
   <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动

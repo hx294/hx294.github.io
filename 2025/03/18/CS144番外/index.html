@@ -21,17 +21,17 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"hxblog.fun","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.23.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"always","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-light"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="由于之前赶着做CS144，一直没有把Minnow的源代码好好看看，现在有时间了，准备将代码逻辑缕缕，看看是如何将包从发送方发出，并一步步到达接收方。 本人仓库代码">
+    <meta name="description" content="由于之前赶着做 CS144，一直没有把 Minnow 的源代码好好看看，现在有时间了，准备将代码逻辑缕缕，看看是如何将包从发送方发出，并一步步到达接收方。 本人仓库代码">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CS144番外">
 <meta property="og:url" content="https://hxblog.fun/2025/03/18/CS144%E7%95%AA%E5%A4%96/index.html">
 <meta property="og:site_name" content="hx294">
-<meta property="og:description" content="由于之前赶着做CS144，一直没有把Minnow的源代码好好看看，现在有时间了，准备将代码逻辑缕缕，看看是如何将包从发送方发出，并一步步到达接收方。 本人仓库代码">
+<meta property="og:description" content="由于之前赶着做 CS144，一直没有把 Minnow 的源代码好好看看，现在有时间了，准备将代码逻辑缕缕，看看是如何将包从发送方发出，并一步步到达接收方。 本人仓库代码">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-03-18T13:41:00.000Z">
-<meta property="article:modified_time" content="2025-04-10T08:11:29.352Z">
+<meta property="article:modified_time" content="2025-05-25T12:56:22.740Z">
 <meta property="article:author" content="hx294">
-<meta property="article:tag" content="网络">
+<meta property="article:tag" content="CS144">
 <meta name="twitter:card" content="summary">
 
 
@@ -136,7 +136,8 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#checkpoint-0"><span class="nav-number">1.</span> <span class="nav-text">checkpoint 0</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#checkpoint-4"><span class="nav-number">2.</span> <span class="nav-text">checkpoint 4</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tun%E8%AE%BE%E5%A4%87"><span class="nav-number">2.1.</span> <span class="nav-text">TUN设备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcpminnowsocket%E4%B8%AD%E7%9A%84%E4%B8%A4%E4%B8%AA%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.2.</span> <span class="nav-text">TCPMinnowSocket中的两个线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tun%E8%AE%BE%E5%A4%87%E4%BC%9A%E6%8E%A5%E6%94%B6%E5%93%AA%E4%BA%9Bip%E6%95%B0%E6%8D%AE%E6%8A%A5"><span class="nav-number">2.3.</span> <span class="nav-text">TUN设备会接收哪些IP数据报？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#checkpoint-7"><span class="nav-number">3.</span> <span class="nav-text">checkpoint 7</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#checkpoint-0"><span class="nav-number">1.</span> <span class="nav-text">checkpoint 0</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#checkpoint-4"><span class="nav-number">2.</span> <span class="nav-text">checkpoint 4</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#tun-%E8%AE%BE%E5%A4%87"><span class="nav-number">2.1.</span> <span class="nav-text">TUN 设备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tcpminnowsocket-%E4%B8%AD%E7%9A%84%E4%B8%A4%E4%B8%AA%E7%BA%BF%E7%A8%8B"><span class="nav-number">2.2.</span> <span class="nav-text">TCPMinnowSocket 中的两个线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tun-%E8%AE%BE%E5%A4%87%E4%BC%9A%E6%8E%A5%E6%94%B6%E5%93%AA%E4%BA%9B-ip-%E6%95%B0%E6%8D%AE%E6%8A%A5"><span class="nav-number">2.3.</span> <span class="nav-text">TUN 设备会接收哪些 IP
+数据报？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#checkpoint-7"><span class="nav-number">3.</span> <span class="nav-text">checkpoint 7</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -151,7 +152,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -193,17 +194,17 @@
       </a>
     </li>
     <li class="popular-posts-item">
+      <a class="popular-posts-link" href="/2025/03/18/how2heap/" rel="bookmark">
+        <time class="popular-posts-time">2025-03-18</time>
+        <br>
+      how2heap
+      </a>
+    </li>
+    <li class="popular-posts-item">
       <a class="popular-posts-link" href="/2025/03/19/Linux%E4%B8%AD%E7%9A%84%E8%AE%BE%E5%A4%87/" rel="bookmark">
         <time class="popular-posts-time">2025-03-19</time>
         <br>
       Linux中的设备
-      </a>
-    </li>
-    <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/2025/04/09/wsl2%E5%92%8Cwin%E7%9A%84%E7%BD%91%E7%BB%9C%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB/" rel="bookmark">
-        <time class="popular-posts-time">2025-04-09</time>
-        <br>
-      wsl2 和 win主机的网络映射关系
       </a>
     </li>
   </ul>
@@ -263,7 +264,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/CS144/" itemprop="url" rel="index"><span itemprop="name">CS144</span></a>
+          <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index"><span itemprop="name">计算机网络</span></a>
         </span>
     </span>
 
@@ -291,26 +292,30 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>由于之前赶着做CS144，一直没有把Minnow的源代码好好看看，现在有时间了，准备将代码逻辑缕缕，看看是如何将包从发送方发出，并一步步到达接收方。</p>
+    <div class="post-body" itemprop="articleBody"><p>由于之前赶着做 CS144，一直没有把 Minnow
+的源代码好好看看，现在有时间了，准备将代码逻辑缕缕，看看是如何将包从发送方发出，并一步步到达接收方。</p>
 <p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2h4Mjk0L2NzMTQ0LTIwMjR3aW50ZXI=">本人仓库代码<i class="fa fa-external-link-alt"></i></span></p>
 <span id="more"></span>
-<p>首先从TCP发送方接收方的耦合开始。</p>
+<p>首先从 TCP 发送方接收方的耦合开始。</p>
 <h2 id="checkpoint-0">checkpoint 0</h2>
-<p>webget.cc 这个文件引用了 socket.hh头文件，查看一下。</p>
-<p>首先定义了一个Socket类，通常不直接使用该类，而是使用其子类TCPSocket或者UDPSocket。注意Socket类的基类是
-FileDescripter。</p>
-<p>Socket
-中定义了一些常用的方法(如构造函数），并用protected修饰，只能由子类或者该类的友元类和友元函数访问，不能被外界代码访问。</p>
+<p>webget.cc 这个文件引用了 socket.hh 头文件，查看一下。</p>
+<p>首先定义了一个 Socket 类，通常不直接使用该类，而是使用其子类
+TCPSocket 或者 UDPSocket。注意 Socket 类的基类是 FileDescripter。</p>
+<p>Socket 中定义了一些常用的方法(如构造函数），并用 protected
+修饰，只能由子类或者该类的友元类和友元函数访问，不能被外界代码访问。</p>
 <ul>
 <li>默认构造函数</li>
 </ul>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// default constructor for socket of (subclassed) domain and type</span></span><br><span class="line"><span class="comment">//! \param[in] domain is as described in [socket(7)](\ref man7::socket), probably `AF_INET` or `AF_UNIX`</span></span><br><span class="line"><span class="comment">//! \param[in] type is as described in [socket(7)](\ref man7::socket)</span></span><br><span class="line">Socket::<span class="built_in">Socket</span>( <span class="type">const</span> <span class="type">int</span> domain, <span class="type">const</span> <span class="type">int</span> type, <span class="type">const</span> <span class="type">int</span> protocol )</span><br><span class="line">  : <span class="built_in">FileDescriptor</span>( ::<span class="built_in">CheckSystemCall</span>( <span class="string">&quot;socket&quot;</span>, <span class="built_in">socket</span>( domain, type, protocol ) ) ) <span class="comment">// 这里是在初始化基类</span></span><br><span class="line">&#123;&#125;</span><br></pre></td></tr></table></figure>
-<p>其中 domain描述了沟通的域， 即协议家族，常见的有 <code>AF_UNIX</code>
-（用于本地通信）和 <code>AF_INET</code> (用于IPV4通信)。</p>
-<p>type描述了沟通语法。例如：SOCK_STREAM
+<p>其中 domain 描述了沟通的域， 即协议家族，常见的有
+<code>AF_UNIX</code> （用于本地通信）和 <code>AF_INET</code> (用于 IPV4
+通信)。</p>
+<p>type 描述了沟通语法。例如：SOCK_STREAM
 支持有序，可靠，双工，连接的字节流，可能支持外带数据的传送机制。</p>
 <p>SOCK_DGRAM 支持 数据报（ 无连接，固定最大长度的不可靠报文）</p>
-<p>protocol描述了描述了套接字使用的特别的协议。多数情况，协议家族只支持一种协议，这样就将protocol置0，少数情况下，就需要描述使用的协议类型。</p>
+<p>protocol
+描述了描述了套接字使用的特别的协议。多数情况，协议家族只支持一种协议，这样就将
+protocol 置 0，少数情况下，就需要描述使用的协议类型。</p>
 <ul>
 <li>使用文件描述符构造</li>
 </ul>
@@ -318,62 +323,76 @@ FileDescripter。</p>
 <p>不过使用确定的文件描述符来构造套接字。</p>
 <p>然后就是其他一些成员函数，获取地址，监听端口等等。</p>
 <h2 id="checkpoint-4">checkpoint 4</h2>
-<p>还记得 我当时写这个<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2h4Mjk0L2NzMTQ0LTIwMjR3aW50ZXIvYmxvYi9tYWluL3dyaXRldXBzL0xhYl9jaGVjazQubWQ=">Lab<i class="fa fa-external-link-alt"></i></span>时，将webget的头文件添加了
+<p>还记得 我当时写这个<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2h4Mjk0L2NzMTQ0LTIwMjR3aW50ZXIvYmxvYi9tYWluL3dyaXRldXBzL0xhYl9jaGVjazQubWQ=">Lab<i class="fa fa-external-link-alt"></i></span>时，将
+webget 的头文件添加了
 <code>\#include "tcp_minnow_socket.hh"</code>，让我们一起剖析一下这个头文件。</p>
-<p>这里面定义了 CS144TCPSocket（继承自 TCPMinnowSocket) ， 由于webget.cc
-中使用的就是这个，说明它集成了我们所有的实现。</p>
+<p>这里面定义了 CS144TCPSocket（继承自 TCPMinnowSocket) ， 由于
+webget.cc 中使用的就是这个，说明它集成了我们所有的实现。</p>
 <p>这个文件引用了 tcppeer。</p>
-<p>TCPPeer类，模拟对等体，将TCPSender和TCPReciver结合起来，里面还出现了TCPMessage（包括将报文段和确认报文一起发送，记住TCP是双向的，这是捎带确认）。</p>
-<p>声明了 TCPMinnowSocket类，继承自LocalStreamSocket类。</p>
-<p>TCPMinnowSocket 是TCPPeer类的多线程封装，模拟Unix套接字。</p>
-<p>构造函数使用了适配器TCPOverIPv4OverTunFdAdapter（使不兼容的对象能够相互合作）。</p>
+<p>TCPPeer 类，模拟对等体，将 TCPSender 和 TCPReciver
+结合起来，里面还出现了 TCPMessage（包括将报文段和确认报文一起发送，记住
+TCP 是双向的，这是捎带确认）。</p>
+<p>声明了 TCPMinnowSocket 类，继承自 LocalStreamSocket 类。</p>
+<p>TCPMinnowSocket 是 TCPPeer 类的多线程封装，模拟 Unix 套接字。</p>
+<p>构造函数使用了适配器
+TCPOverIPv4OverTunFdAdapter（使不兼容的对象能够相互合作）。</p>
 <p>通过该适配器，读取和写入<a
-href="%5BTUN/TAP%20-%20Wikipedia%5D(https://en.wikipedia.org/wiki/TUN/TAP)">TUN设备</a>，<strong>TUN设备用于内核网络协议栈（链路层）和用户空间之间传递数据</strong>，<strong>是虚拟的网络接口</strong>。使得链路层及以下变得透明。</p>
-<h3 id="tun设备">TUN设备</h3>
-<p>TCPOverIPv4OverTunFdAdapter有一个成员变量 TunFD
-，这是TUN设备的文件描述符，这样我们就可以在用户态将IP数据报度写入内核。</p>
+href="%5BTUN/TAP%20-%20Wikipedia%5D(https://en.wikipedia.org/wiki/TUN/TAP)">TUN
+设备</a>，<strong>TUN
+设备用于内核网络协议栈（链路层）和用户空间之间传递数据</strong>，<strong>是虚拟的网络接口</strong>。使得链路层及以下变得透明。</p>
+<h3 id="tun-设备">TUN 设备</h3>
+<p>TCPOverIPv4OverTunFdAdapter 有一个成员变量 TunFD ，这是 TUN
+设备的文件描述符，这样我们就可以在用户态将 IP 数据报度写入内核。</p>
 <p>再看看 CS144TCPSocket 的 connect 函数：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">connect</span><span class="params">( <span class="type">const</span> Address&amp; address )</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    TCPConfig tcp_config;</span><br><span class="line">    tcp_config.rt_timeout = <span class="number">100</span>;</span><br><span class="line"></span><br><span class="line">    FdAdapterConfig multiplexer_config;</span><br><span class="line">    multiplexer_config.source = &#123; <span class="string">&quot;169.254.144.9&quot;</span>, std::<span class="built_in">to_string</span>( <span class="built_in">uint16_t</span>( std::<span class="built_in">random_device</span>()() ) ) &#125;;</span><br><span class="line">    multiplexer_config.destination = address;</span><br><span class="line"></span><br><span class="line">    TCPOverIPv4MinnowSocket::<span class="built_in">connect</span>( tcp_config, multiplexer_config );</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-<p>首先定义了TCPConfig，用于 配置TCP的参数。通过FdAdapterConfig
+<p>首先定义了 TCPConfig，用于 配置 TCP 的参数。通过 FdAdapterConfig
 配置原地址和目标地址信息。然后使用父类
-TCPOverIPv4MinnowSocket（TCPMinnowSocket<TCPOverIPv4OverTunFdAdapter>）的connect函数，继续连接目标地址。</p>
-<p>在TCPMinnowSocket的connect的函数中将发送者的transmit函数设置为向适配器写入的函数，这样当发送方发送时，实际上是写入到TUN设备中。</p>
-<p>那么接收方是如何从TUN设备读取数据呢？</p>
+TCPOverIPv4MinnowSocket（TCPMinnowSocket<TCPOverIPv4OverTunFdAdapter>）的
+connect 函数，继续连接目标地址。</p>
+<p>在 TCPMinnowSocket 的 connect 的函数中将发送者的 transmit
+函数设置为向适配器写入的函数，这样当发送方发送时，实际上是写入到 TUN
+设备中。</p>
+<p>那么接收方是如何从 TUN 设备读取数据呢？</p>
 <p>找到了部分代码</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( <span class="keyword">auto</span> seg = _datagram_adapter.<span class="built_in">read</span>() ) &#123;</span><br><span class="line">        _tcp-&gt;<span class="built_in">receive</span>( std::<span class="built_in">move</span>( seg.<span class="built_in">value</span>() ), [&amp;]( <span class="keyword">auto</span> x ) &#123; _datagram_adapter.<span class="built_in">write</span>( x ); &#125; );</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
-<p>这里通过从TUN设备中获取数据，再将其交给TCPPeer。</p>
-<p>至此我们弄明白，CS144TCPSocket通过使用TCPPeer（简单理解为我们写的代码的集合），构造TCP报文段，通过适配器转化为IP报文并写入TUN设备（也是通过文件描述符）中，接下来的所有事就交由给内核处理。
-反之则从TUN设备中读取IP报文段，转化为
-TCP报文段，然后通过TCPPeer转化为字节流，交付给上层进程。</p>
-<h3 id="tcpminnowsocket中的两个线程">TCPMinnowSocket中的两个线程</h3>
-<p>TCPMinnowSocket 和 正常的TCPSocket的区别：</p>
+<p>这里通过从 TUN 设备中获取数据，再将其交给 TCPPeer。</p>
+<p>至此我们弄明白，CS144TCPSocket 通过使用
+TCPPeer（简单理解为我们写的代码的集合），构造 TCP
+报文段，通过适配器转化为 IP 报文并写入 TUN
+设备（也是通过文件描述符）中，接下来的所有事就交由给内核处理。 反之则从
+TUN 设备中读取 IP 报文段，转化为 TCP 报文段，然后通过 TCPPeer
+转化为字节流，交付给上层进程。</p>
+<h3 id="tcpminnowsocket-中的两个线程">TCPMinnowSocket 中的两个线程</h3>
+<p>TCPMinnowSocket 和 正常的 TCPSocket 的区别：</p>
 <ul>
 <li>只能接收单个连接</li>
-<li>listen_and_accept 是 listen和accept的结合</li>
-<li>如果在TCP连接时被销毁，会直接发送RST终止，但可以通过wait_until_close
-来避免，从而四次挥手。</li>
+<li>listen_and_accept 是 listen 和 accept 的结合</li>
+<li>如果在 TCP 连接时被销毁，会直接发送 RST 终止，但可以通过
+wait_until_close 来避免，从而四次挥手。</li>
 </ul>
-<p>一个前台线程，使得和<code>TCPMinnowSocket</code>交互就像和TCPSocket交互一样：
-连接，侦听和从可靠字节流（TCP）中读取。</p>
-<p>另一个是后台（TCPPeer）线程，负责处理内核为TCPSocket所执行的后台工作：
-读取和解析网络上的数据报，过滤无关报文段等。</p>
-<p>后台线程
-监听事件通过eventloop完成，eventloop在TCP初始化中加入了三种事件的规则：</p>
+<p>一个前台线程，使得和<code>TCPMinnowSocket</code>交互就像和 TCPSocket
+交互一样： 连接，侦听和从可靠字节流（TCP）中读取。</p>
+<p>另一个是后台（TCPPeer）线程，负责处理内核为 TCPSocket
+所执行的后台工作： 读取和解析网络上的数据报，过滤无关报文段等。</p>
+<p>后台线程 监听事件通过 eventloop 完成，eventloop 在 TCP
+初始化中加入了三种事件的规则：</p>
 <ul>
-<li>接收到的数据报，经过适配器的解析，交给TCPPeer,
-然后TCPPeer将其分解为TCPSenderMessage和TCPReciverMessage
-，TCPSenderMessage交给 TCPReciver 处理（Reassembler， 等等），
-TCPReciverMessage交给 TCPSender处理。</li>
+<li>接收到的数据报，经过适配器的解析，交给 TCPPeer, 然后 TCPPeer
+将其分解为 TCPSenderMessage 和 TCPReciverMessage ，TCPSenderMessage 交给
+TCPReciver 处理（Reassembler， 等等）， TCPReciverMessage 交给 TCPSender
+处理。</li>
 <li>从本地程序收到的外出比特， TCPMinnowSocket 的 描述符和_thread_data
-(用来进程间传送数据) 是一对LocalStreamsocket。外部程序向CS144TCPSocket
-写入，就会传送（本质上还是TCP）到
+(用来进程间传送数据) 是一对 LocalStreamsocket。外部程序向 CS144TCPSocket
+写入，就会传送（本质上还是 TCP）到
 _thread_data，从而后台线程就可以读取。</li>
-<li>接收到的被Reassembler重组的字节流，同样需要写入thread_data然后被应用程序读取。</li>
+<li>接收到的被 Reassembler 重组的字节流，同样需要写入 thread_data
+然后被应用程序读取。</li>
 </ul>
-<p>我们实现的TCP，仅支持监听和接收一条线路，不支持多路复用和排队。</p>
-<h3 id="tun设备会接收哪些ip数据报">TUN设备会接收哪些IP数据报？</h3>
-<p>查看tun.sh</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">TUN_IP_PREFIX=169.254</span><br><span class="line"><span class="function"><span class="title">start_tun</span></span> () &#123;</span><br><span class="line">	<span class="comment"># 第一个参数作为TUNNUM，是设备编号，命名为tun#</span></span><br><span class="line">    <span class="built_in">local</span> TUNNUM=<span class="string">&quot;<span class="variable">$1</span>&quot;</span> TUNDEV=<span class="string">&quot;tun<span class="variable">$1</span>&quot;</span> </span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 添加tun设备	</span></span><br><span class="line">    ip tuntap add mode tun user <span class="string">&quot;<span class="variable">$&#123;SUDO_USER&#125;</span>&quot;</span> name <span class="string">&quot;<span class="variable">$&#123;TUNDEV&#125;</span>&quot;</span></span><br><span class="line">    <span class="comment"># 给 tun144 配置ip地址</span></span><br><span class="line">    ip addr add <span class="string">&quot;<span class="variable">$&#123;TUN_IP_PREFIX&#125;</span>.<span class="variable">$&#123;TUNNUM&#125;</span>.1/24&quot;</span> dev <span class="string">&quot;<span class="variable">$&#123;TUNDEV&#125;</span>&quot;</span></span><br><span class="line">    <span class="comment"># 启动tun设备</span></span><br><span class="line">    ip <span class="built_in">link</span> <span class="built_in">set</span> dev <span class="string">&quot;<span class="variable">$&#123;TUNDEV&#125;</span>&quot;</span> up</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 配置流经tun设备的目标网段</span></span><br><span class="line">    ip route change <span class="string">&quot;<span class="variable">$&#123;TUN_IP_PREFIX&#125;</span>.<span class="variable">$&#123;TUNNUM&#125;</span>.0/24&quot;</span> dev <span class="string">&quot;<span class="variable">$&#123;TUNDEV&#125;</span>&quot;</span> rto_min 10ms</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Apply NAT (masquerading) only to traffic from CS144&#x27;s network devices</span></span><br><span class="line">    <span class="comment"># 为tun设备的数据在路由前打标签，现在linux服务器相当于路由器实现转发功能。</span></span><br><span class="line">    iptables -t nat -A PREROUTING -s <span class="variable">$&#123;TUN_IP_PREFIX&#125;</span>.<span class="variable">$&#123;TUNNUM&#125;</span>.0/24 -j CONNMARK --set-mark <span class="variable">$&#123;TUNNUM&#125;</span></span><br><span class="line">    <span class="comment"># 刚才打标签的数据报伪造成服务器ip，实现nat</span></span><br><span class="line">    iptables -t nat -A POSTROUTING -j MASQUERADE -m connmark --mark <span class="variable">$&#123;TUNNUM&#125;</span></span><br><span class="line">    <span class="comment"># 让服务器像路由器一样，转发接收到的数据报。</span></span><br><span class="line">    <span class="built_in">echo</span> 1 &gt; /proc/sys/net/ipv4/ip_forward</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们实现的 TCP，仅支持监听和接收一条线路，不支持多路复用和排队。</p>
+<h3 id="tun-设备会接收哪些-ip-数据报">TUN 设备会接收哪些 IP
+数据报？</h3>
+<p>查看 tun.sh</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">TUN_IP_PREFIX=169.254</span><br><span class="line"><span class="function"><span class="title">start_tun</span></span> () &#123;</span><br><span class="line">	<span class="comment"># 第一个参数作为TUNNUM，是设备编号，命名为tun#</span></span><br><span class="line">    <span class="built_in">local</span> TUNNUM=<span class="string">&quot;<span class="variable">$1</span>&quot;</span> TUNDEV=<span class="string">&quot;tun<span class="variable">$1</span>&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 添加tun设备</span></span><br><span class="line">    ip tuntap add mode tun user <span class="string">&quot;<span class="variable">$&#123;SUDO_USER&#125;</span>&quot;</span> name <span class="string">&quot;<span class="variable">$&#123;TUNDEV&#125;</span>&quot;</span></span><br><span class="line">    <span class="comment"># 给 tun144 配置ip地址</span></span><br><span class="line">    ip addr add <span class="string">&quot;<span class="variable">$&#123;TUN_IP_PREFIX&#125;</span>.<span class="variable">$&#123;TUNNUM&#125;</span>.1/24&quot;</span> dev <span class="string">&quot;<span class="variable">$&#123;TUNDEV&#125;</span>&quot;</span></span><br><span class="line">    <span class="comment"># 启动tun设备</span></span><br><span class="line">    ip <span class="built_in">link</span> <span class="built_in">set</span> dev <span class="string">&quot;<span class="variable">$&#123;TUNDEV&#125;</span>&quot;</span> up</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 配置流经tun设备的目标网段</span></span><br><span class="line">    ip route change <span class="string">&quot;<span class="variable">$&#123;TUN_IP_PREFIX&#125;</span>.<span class="variable">$&#123;TUNNUM&#125;</span>.0/24&quot;</span> dev <span class="string">&quot;<span class="variable">$&#123;TUNDEV&#125;</span>&quot;</span> rto_min 10ms</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Apply NAT (masquerading) only to traffic from CS144&#x27;s network devices</span></span><br><span class="line">    <span class="comment"># 为tun设备的数据在路由前打标签，现在linux服务器相当于路由器实现转发功能。</span></span><br><span class="line">    iptables -t nat -A PREROUTING -s <span class="variable">$&#123;TUN_IP_PREFIX&#125;</span>.<span class="variable">$&#123;TUNNUM&#125;</span>.0/24 -j CONNMARK --set-mark <span class="variable">$&#123;TUNNUM&#125;</span></span><br><span class="line">    <span class="comment"># 刚才打标签的数据报伪造成服务器ip，实现nat</span></span><br><span class="line">    iptables -t nat -A POSTROUTING -j MASQUERADE -m connmark --mark <span class="variable">$&#123;TUNNUM&#125;</span></span><br><span class="line">    <span class="comment"># 让服务器像路由器一样，转发接收到的数据报。</span></span><br><span class="line">    <span class="built_in">echo</span> 1 &gt; /proc/sys/net/ipv4/ip_forward</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="checkpoint-7">checkpoint 7</h2>
 <figure>
 <img
@@ -382,32 +401,34 @@ alt="image-20250214100950522" />
 <figcaption aria-hidden="true">image-20250214100950522</figcaption>
 </figure>
 <p>服务器和客户端，通过中继服务器连接。</p>
-<p>如果没有中继服务器，那么服务器和客户端在同一个NAT网络下，能否进行交互呢？</p>
-<p>答案应该是不能，因为一个是在192.168.0.1网段下的，另一个是在172.16.0.1
-网段下的，而路由器不能识别这些ip源地址。</p>
-<p>所以在这部分中，使用UDP将以太网帧封装，才能发送出去。</p>
+<p>如果没有中继服务器，那么服务器和客户端在同一个 NAT
+网络下，能否进行交互呢？</p>
+<p>答案应该是不能，因为一个是在 192.168.0.1 网段下的，另一个是在
+172.16.0.1 网段下的，而路由器不能识别这些 ip 源地址。</p>
+<p>所以在这部分中，使用 UDP 将以太网帧封装，才能发送出去。</p>
 <p>配置路由：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( is_client ) &#123;</span><br><span class="line">    host_side = router.<span class="built_in">add_interface</span>( <span class="built_in">make_shared</span>&lt;NetworkInterface&gt;(</span><br><span class="line">      <span class="string">&quot;host_side&quot;</span>, router_to_host, <span class="built_in">random_router_ethernet_address</span>(), Address &#123; <span class="string">&quot;192.168.0.1&quot;</span> &#125; ) );</span><br><span class="line">    internet_side = router.<span class="built_in">add_interface</span>( <span class="built_in">make_shared</span>&lt;NetworkInterface&gt;(</span><br><span class="line">      <span class="string">&quot;internet side&quot;</span>, router_to_internet, <span class="built_in">random_router_ethernet_address</span>(), Address &#123; <span class="string">&quot;10.0.0.192&quot;</span> &#125; ) );</span><br><span class="line">    router.<span class="built_in">add_route</span>( Address &#123; <span class="string">&quot;192.168.0.0&quot;</span> &#125;.<span class="built_in">ipv4_numeric</span>(), <span class="number">16</span>, &#123;&#125;, host_side );</span><br><span class="line">    router.<span class="built_in">add_route</span>( Address &#123; <span class="string">&quot;10.0.0.0&quot;</span> &#125;.<span class="built_in">ipv4_numeric</span>(), <span class="number">8</span>, &#123;&#125;, internet_side );</span><br><span class="line">    router.<span class="built_in">add_route</span>( Address &#123; <span class="string">&quot;172.16.0.0&quot;</span> &#125;.<span class="built_in">ipv4_numeric</span>(), <span class="number">12</span>, Address &#123; <span class="string">&quot;10.0.0.172&quot;</span> &#125;, internet_side );</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    host_side = router.<span class="built_in">add_interface</span>( <span class="built_in">make_shared</span>&lt;NetworkInterface&gt;(</span><br><span class="line">      <span class="string">&quot;host_side&quot;</span>, router_to_host, <span class="built_in">random_router_ethernet_address</span>(), Address &#123; <span class="string">&quot;172.16.0.1&quot;</span> &#125; ) );</span><br><span class="line">    internet_side = router.<span class="built_in">add_interface</span>( <span class="built_in">make_shared</span>&lt;NetworkInterface&gt;(</span><br><span class="line">      <span class="string">&quot;internet side&quot;</span>, router_to_internet, <span class="built_in">random_router_ethernet_address</span>(), Address &#123; <span class="string">&quot;10.0.0.172&quot;</span> &#125; ) );</span><br><span class="line">    router.<span class="built_in">add_route</span>( Address &#123; <span class="string">&quot;172.16.0.0&quot;</span> &#125;.<span class="built_in">ipv4_numeric</span>(), <span class="number">12</span>, &#123;&#125;, host_side );</span><br><span class="line">    router.<span class="built_in">add_route</span>( Address &#123; <span class="string">&quot;10.0.0.0&quot;</span> &#125;.<span class="built_in">ipv4_numeric</span>(), <span class="number">8</span>, &#123;&#125;, internet_side );</span><br><span class="line">    router.<span class="built_in">add_route</span>( Address &#123; <span class="string">&quot;192.168.0.0&quot;</span> &#125;.<span class="built_in">ipv4_numeric</span>(), <span class="number">16</span>, Address &#123; <span class="string">&quot;10.0.0.192&quot;</span> &#125;, internet_side );</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 <p>和上面图片一样。</p>
 <p>配置客户端或者服务器</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* set up the client */</span></span><br><span class="line">  TCPSocketEndToEnd sock = is_client ? TCPSocketEndToEnd &#123; Address &#123; <span class="string">&quot;192.168.0.50&quot;</span> &#125;, Address &#123; <span class="string">&quot;192.168.0.1&quot;</span> &#125; &#125;</span><br><span class="line">                                     : TCPSocketEndToEnd &#123; Address &#123; <span class="string">&quot;172.16.0.100&quot;</span> &#125;, Address </span><br></pre></td></tr></table></figure>
-<p>一个地址为其ip地址，另一个是下一跳地址。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* set up the client */</span></span><br><span class="line">  TCPSocketEndToEnd sock = is_client ? TCPSocketEndToEnd &#123; Address &#123; <span class="string">&quot;192.168.0.50&quot;</span> &#125;, Address &#123; <span class="string">&quot;192.168.0.1&quot;</span> &#125; &#125;</span><br><span class="line">                                     : TCPSocketEndToEnd &#123; Address &#123; <span class="string">&quot;172.16.0.100&quot;</span> &#125;, Address</span><br></pre></td></tr></table></figure>
+<p>一个地址为其 ip 地址，另一个是下一跳地址。</p>
 <p>然后设置网络的各种事件：</p>
 <ul>
 <li>主机到路由器</li>
 <li>路由器到主机</li>
 <li>路由器到网络</li>
 <li>网络到路由器
-，然后转到网络接口，再由路由器网络接口转入主机网络接口，再由适配器读入，然后TCPMinnowSocket读入，和之前一样。</li>
+，然后转到网络接口，再由路由器网络接口转入主机网络接口，再由适配器读入，然后
+TCPMinnowSocket 读入，和之前一样。</li>
 </ul>
-<p>新定义的TCPSocketEndToEnd连接了主机和路由（一对套接字），使用UDPSocket连接
-连接远程终端（网络）。</p>
+<p>新定义的 TCPSocketEndToEnd 连接了主机和路由（一对套接字），使用
+UDPSocket 连接 连接远程终端（网络）。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> ( <span class="literal">true</span> ) &#123;</span><br><span class="line">       <span class="keyword">if</span> ( EventLoop::Result::Exit == event_loop.<span class="built_in">wait_next_event</span>( <span class="number">10</span> ) ) &#123;</span><br><span class="line">         cerr &lt;&lt; <span class="string">&quot;Exiting...\n&quot;</span>;</span><br><span class="line">         <span class="keyword">return</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       router.<span class="built_in">interface</span>( host_side )-&gt;<span class="built_in">tick</span>( <span class="number">10</span> );</span><br><span class="line">       router.<span class="built_in">interface</span>( internet_side )-&gt;<span class="built_in">tick</span>( <span class="number">10</span> );</span><br><span class="line"></span><br><span class="line">       <span class="keyword">if</span> ( exit_flag ) &#123;</span><br><span class="line">         <span class="keyword">return</span>;</span><br><span class="line">       &#125;</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
 <p>这里为接口记录时间。</p>
-<p>可以看出TCP实际传送是通过 <strong>TCP-in-IP-Ethernet-UDP</strong>
+<p>可以看出 TCP 实际传送是通过 <strong>TCP-in-IP-Ethernet-UDP</strong>
 方法。</p>
-<p>将其当做 <strong>UDP</strong> 数据报
-进行传输。因为UDP是不可靠传输，如果传输过程中发生损坏，就可以通过我们实现的<strong>TCP</strong>
+<p>将其当做 <strong>UDP</strong> 数据报 进行传输。因为 UDP
+是不可靠传输，如果传输过程中发生损坏，就可以通过我们实现的<strong>TCP</strong>
 来进行纠错检测等等操作，来保证数据的正确传输。</p>
 
     </div>
@@ -418,15 +439,15 @@ alt="image-20250214100950522" />
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E7%BD%91%E7%BB%9C/" rel="tag"># 网络</a>
+              <a href="/tags/CS144/" rel="tag"># CS144</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2024/03/14/%E8%8C%83%E6%95%B0%E3%80%81%E8%B7%9D%E7%A6%BB%E4%B8%8E%E7%9B%B8%E4%BC%BC%E5%BA%A6/" rel="prev" title="范数、距离与相似度">
-                  <i class="fa fa-angle-left"></i> 范数、距离与相似度
+                <a href="/2025/03/18/how2heap/" rel="prev" title="how2heap">
+                  <i class="fa fa-angle-left"></i> how2heap
                 </a>
             </div>
             <div class="post-nav-item">
@@ -464,14 +485,14 @@ alt="image-20250214100950522" />
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">8k</span>
+    <span title="站点总字数">11k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">31 分钟</span>
+    <span title="站点阅读时长">38 分钟</span>
   </span>
 </div>
   <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动

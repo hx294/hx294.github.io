@@ -1263,7 +1263,7 @@ pre code {
   vertical-align: middle;
 }
 .links-of-author a::before {
-  background: #ff69ff;
+  background: #ff7309;
   display: inline-block;
   margin-right: 3px;
   transform: translateY(-2px);
@@ -2726,4 +2726,27 @@ header.header {
 }
 .sub-menu .menu-item {
   display: inline-block;
+}
+body {
+  background: url("/images/aniya.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: 50% 50%;
+}
+.sidebar {
+  opacity: 0.85;
+}
+.main-inner {
+  background: rgba(255,255,255,0.9);
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.header-inner {
+  background: rgba(255,255,255,0.6);
+}
+​,
+.footer {
+  background-color: transparent;
+  color: #000;
 }
