@@ -21,17 +21,17 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"hxblog.fun","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.23.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"always","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-light"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="记录一下csapp第八章homework">
+    <meta name="description" content="记录一下 csapp 第八章 homework">
 <meta property="og:type" content="article">
 <meta property="og:title" content="异常控制流-homework">
 <meta property="og:url" content="https://hxblog.fun/2023/12/03/%E5%BC%82%E5%B8%B8%E6%8E%A7%E5%88%B6%E6%B5%81-homework/index.html">
 <meta property="og:site_name" content="hx294">
-<meta property="og:description" content="记录一下csapp第八章homework">
+<meta property="og:description" content="记录一下 csapp 第八章 homework">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-12-03T08:00:20.000Z">
-<meta property="article:modified_time" content="2025-04-09T06:28:04.793Z">
+<meta property="article:modified_time" content="2025-07-05T13:15:04.176Z">
 <meta property="article:author" content="hx294">
-<meta property="article:tag" content="异常控制流">
+<meta property="article:tag" content="csapp">
 <meta name="twitter:card" content="summary">
 
 
@@ -151,12 +151,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -249,7 +249,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/csapp/" itemprop="url" rel="index"><span itemprop="name">csapp</span></a>
+          <a href="/categories/%E5%BC%82%E5%B8%B8%E6%8E%A7%E5%88%B6%E6%B5%81/" itemprop="url" rel="index"><span itemprop="name">异常控制流</span></a>
         </span>
     </span>
 
@@ -277,25 +277,30 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>记录一下csapp第八章homework <span id="more"></span></p>
+    <div class="post-body" itemprop="articleBody"><p>记录一下 csapp 第八章 homework</p>
+<span id="more"></span>
 <h2 id="section"><strong>8-23</strong></h2>
-<p><em>题目中counter等于2，当子进程发送了一个信号sigusr2给父进程时，父进程进入异常处理程序。紧接着，子进程又发送了一个信号，而父进程此时仍在处理程序中，内核设置pending位为1。后续子进程继续发送信号，由于父进程始终处于第一个信号处理程序中，所以剩下三个信号均被丢弃。最后再接收第二个信号。</em></p>
+<p><em>题目中 counter 等于 2，当子进程发送了一个信号 sigusr2
+给父进程时，父进程进入异常处理程序。紧接着，子进程又发送了一个信号，而父进程此时仍在处理程序中，内核设置
+pending 位为
+1。后续子进程继续发送信号，由于父进程始终处于第一个信号处理程序中，所以剩下三个信号均被丢弃。最后再接收第二个信号。</em></p>
 <p>但是在我的计算机上面跑这个程序得到了不同的结果，如图： <img
 src="信号计数.png" alt="信号计数" /></p>
-<p>原因是子进程发送信号后，父进程没有立即处理，所以pending位被一直占用，所以四个信号都被丢弃了。只进行了一次处理程序。
-可以通过不断增加发送信号的次数,以增加切换到父进程的概率，观察counter的变化。
-还可以通过向for循环增加sleep以得到正确的次数。</p>
+<p>原因是子进程发送信号后，父进程没有立即处理，所以 pending
+位被一直占用，所以四个信号都被丢弃了。只进行了一次处理程序。
+可以通过不断增加发送信号的次数,以增加切换到父进程的概率，观察 counter
+的变化。 还可以通过向 for 循环增加 sleep 以得到正确的次数。</p>
 <h2 id="section-1"><strong>8-24</strong></h2>
 <p>修改例子后的代码如下</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">#include&quot;../csapp.h&quot;</span><br><span class="line">#define N 2</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">        int status,i;</span><br><span class="line">        pid_t pid;</span><br><span class="line"></span><br><span class="line">        for(int i=0; i&lt; N; i++)&#123;</span><br><span class="line">                if((pid = Fork()) == 0)</span><br><span class="line">                &#123;</span><br><span class="line">                        char* ptr = (char*)&amp;main;</span><br><span class="line">                        *ptr = &#x27;c&#x27;;</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        while((pid = waitpid(-1,&amp;status,0)) &gt; 0)&#123;</span><br><span class="line">                if(WIFEXITED(status))&#123;</span><br><span class="line">                        printf(&quot;child %d terminated normally with exit status=%d\n&quot;, pid, WEXITSTATUS(status));</span><br><span class="line">                &#125;</span><br><span class="line">                else if(WIFSIGNALED(status))&#123;</span><br><span class="line">                        char buf[128];</span><br><span class="line">                        sprintf(buf,&quot;child %d terminated by signal %d &quot;,pid,WTERMSIG(status));</span><br><span class="line">                        psignal(WTERMSIG(status),buf);</span><br><span class="line">                &#125;</span><br><span class="line">                else</span><br><span class="line">                        printf(&quot;child %d terminated abnormally\n&quot;,pid);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if(errno != ECHILD)&#123;</span><br><span class="line">                unix_error(&quot;waitpid error&quot;);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        exit(0);</span><br></pre></td></tr></table></figure>
 <h2 id="section-2"><strong>8-25</strong></h2>
-<p><em>初看题目没什么思路，按题目的意思，要求在五秒之后中断输入，直接返回NULL</em>
-如何中断呢，还限时，那就只有alarm了。
-五秒钟过后，如何在返回NULL呢，要用到<strong>非本地跳转</strong></p>
+<p><em>初看题目没什么思路，按题目的意思，要求在五秒之后中断输入，直接返回
+NULL</em> 如何中断呢，还限时，那就只有 alarm 了。 五秒钟过后，如何在返回
+NULL 呢，要用到<strong>非本地跳转</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">#include&quot;../csapp.h&quot;</span><br><span class="line"></span><br><span class="line">sigjmp_buf buf;</span><br><span class="line"></span><br><span class="line">void handler(int sig)&#123;</span><br><span class="line">        siglongjmp(buf,1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">char* tfgets(char* s,int n, FILE* stream)&#123;</span><br><span class="line">        if(!sigsetjmp(buf,1))//保存信号屏蔽字</span><br><span class="line">        &#123;</span><br><span class="line">                alarm(5);</span><br><span class="line">                if(Signal(SIGALRM,handler)==SIG_ERR)</span><br><span class="line">                &#123;</span><br><span class="line">                        unix_error(&quot;Failed to install SIGALRM&#x27;s handler&quot;);</span><br><span class="line">                        return NULL;</span><br><span class="line">                &#125;</span><br><span class="line">                return fgets(s,n,stream);</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">                return NULL;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">        char buf[100] ;</span><br><span class="line">        char* res;</span><br><span class="line">        res=tfgets(buf,99,stdin);</span><br><span class="line">        if(res)</span><br><span class="line">                printf(&quot;%s&quot;,buf);</span><br><span class="line">        else</span><br><span class="line">                printf(&quot;Time out!&quot;);</span><br><span class="line"></span><br><span class="line">        return 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="section-3"><strong>8-26</strong></h2>
-<p>感觉这个比lab要难。lab直接填，而这个要自己写出job</p>
-<p>第一个要求，之前书上实现过了,不过等待信号要用sigsuspend,</p>
+<p>感觉这个比 lab 要难。lab 直接填，而这个要自己写出 job</p>
+<p>第一个要求，之前书上实现过了,不过等待信号要用 sigsuspend,</p>
 <p>就是<a
 href="https://hxblog.fun/2023/12/03/Shell-lab/#more">lab</a></p>
 
@@ -307,7 +312,7 @@ href="https://hxblog.fun/2023/12/03/Shell-lab/#more">lab</a></p>
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E5%BC%82%E5%B8%B8%E6%8E%A7%E5%88%B6%E6%B5%81/" rel="tag"># 异常控制流</a>
+              <a href="/tags/csapp/" rel="tag"># csapp</a>
           </div>
 
         
@@ -360,7 +365,7 @@ href="https://hxblog.fun/2023/12/03/Shell-lab/#more">lab</a></p>
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">38 分钟</span>
+    <span title="站点阅读时长">40 分钟</span>
   </span>
 </div>
   <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动

